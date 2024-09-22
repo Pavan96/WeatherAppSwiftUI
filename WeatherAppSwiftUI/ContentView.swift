@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var isNight = false
+    @State private var isNight = false
     
     var body: some View {
         return ZStack{
-            BackgroundView(topColor: isNight ?.black : .blue, bottomColor: isNight ? .gray : Color("lightBlue"))
+
+            BackgroundView(isNight: $isNight)
+            
             VStack {
                 CityTextView()
                 
@@ -73,11 +75,11 @@ struct WeatherDayView: View {
 }
 
 struct BackgroundView: View {
-    var topColor: Color
-    var bottomColor: Color
+   
+    @Binding var isNight: Bool
     
     var body: some View {
-        LinearGradient(gradient: Gradient(colors: [topColor, bottomColor]), startPoint: .topTrailing, endPoint: .bottomTrailing)
+        LinearGradient(gradient: Gradient(colors: [ isNight ?.black : .blue, isNight ? .gray : Color("lightBlue")]), startPoint: .topTrailing, endPoint: .bottomTrailing)
             .edgesIgnoringSafeArea(.all)
     }
 }
